@@ -6,6 +6,8 @@
 
 class Game
 {
+	int screen_width;
+	int screen_height;
 	bool running = 1,pause=0;
 	SDL_Window* window;
 	SDL_RendererFlip flip;
@@ -22,9 +24,9 @@ public:
 	void render();
 	void capFPS(int start);
 	void clean();
-	bool checkCollision(SDL_Rect r1, SDL_Rect r2);
+	static bool checkCollision(SDL_Rect r1, SDL_Rect r2);
 	bool isRunning();
 	bool Paused();
 	~Game();
-};
 
+};
