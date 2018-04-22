@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "TextureManager.h"
-#include "Map.h"
+#include "Collider.h"
 
 GameObject::GameObject(const char *texturefile,int x, int y,int w, int h, int scale)
 {
@@ -27,19 +27,15 @@ void GameObject::update()
 {
 	position.x += velocity.x * speed;
 	position.y += velocity.y * speed;
-	SDL_Rect collider = { position.x,position.y + dest.h,dest.w,0 };
-	for (int i = 0; i < 15; i++)
-		for (int j = 0; j < 211; j++)
-		{
-			SDL_Rect collider2 = { j * 64,i * 64,64,64 };
-			if (Game::checkCollision(collider, collider2))
-			{
-				if (Map::map[i][j] <8 && Map::map[i][j] >-1)
-					position.y = collider2.y - dest.h;
-			}
-		}
+	handleCollision();
 	dest.x = position.x-Game::camera.x;
 	dest.y = position.y;
+}
+void GameObject::handleCollision()
+{
+	Collider *col = Collider::CheckCollision(position, dest);
+	if (col[1].m<8 && col[1].m>-1)
+		position.y = col[1].collider.y - dest.h;
 }
 void GameObject::render(SDL_RendererFlip flip)
 {

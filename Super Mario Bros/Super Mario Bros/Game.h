@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <iostream>
+#include "Vector2D.h"
 
 class Game
 {
@@ -24,7 +25,6 @@ public:
 	void render();
 	void capFPS(int start);
 	void clean();
-	static bool checkCollision(SDL_Rect r1, SDL_Rect r2);
 	bool isRunning();
 	bool Paused();
 	~Game();

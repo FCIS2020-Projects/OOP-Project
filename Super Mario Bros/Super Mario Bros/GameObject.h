@@ -1,6 +1,5 @@
 #pragma once
 #include "Game.h"
-#include "Vector2D.h"
 
 class GameObject
 {
@@ -14,6 +13,7 @@ public:
 	SDL_Rect src, dest;
 	GameObject(const char *texturefile, int x, int y, int w, int h,int scale);
 	void update();
+	void handleCollision();
 	void render(SDL_RendererFlip flip);
 	~GameObject();
 };

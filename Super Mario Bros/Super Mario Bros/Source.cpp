@@ -10,9 +10,11 @@ int main(int argc, char* argv[])
 	{
 		int start = SDL_GetTicks();
 		game.handleEvents();
-		if(!game.Paused())
+		if (!game.Paused())
+		{
 			game.update();
-		game.render();
+			game.render();
+		}
 		game.capFPS(start);
 	}
 

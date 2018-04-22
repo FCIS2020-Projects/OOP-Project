@@ -1,6 +1,5 @@
 #include "Player.h"
-#include <iostream>
-#include "Map.h"
+#include "Collider.h"
 
 Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :GameObject(texturefile, x, y, w, h, scale)
 {
@@ -23,54 +22,35 @@ void Player::update()
 		position.x = 0;
 	if (position.y <= lastPosition.y - jumpHeight)
 		velocity.y = 2;
-	SDL_Rect colliderbottom = { position.x+16,position.y+dest.h,dest.w-32,1 };
-	SDL_Rect collidertop = { position.x+16,position.y,dest.w-32,1 };
-	SDL_Rect colliderleft = { position.x,position.y+16,1,dest.h-32 };
-	SDL_Rect colliderright = { position.x+dest.w,position.y+16,1,dest.h-32 };
-	for (int i = 0; i < 15; i++)
-		for (int j = 0; j < 211; j++)
-		{
-			SDL_Rect collider2 = { j * 64,i * 64,64,64 };
-			if (Game::checkCollision(colliderbottom, collider2))
-			{
-				if (Map::map[i][j] <8 && Map::map[i][j] >-1)
-				{
-					jumping = 0;
-					position.y = collider2.y - dest.h;
-					break;
-				}
-				else
-					jumping = 1;
-			}
-			if (Game::checkCollision(colliderright, collider2))
-			{
-				if (Map::map[i][j] <8 && Map::map[i][j] >-1)
-				{
-					position.x = collider2.x - dest.w;
-					break;
-				}
-			}
-			if (Game::checkCollision(colliderleft, collider2))
-			{
-				if (Map::map[i][j] <8 && Map::map[i][j] >-1)
-				{
-					position.x = collider2.x + collider2.w;
-					break;
-				}
-			}
-			if (Game::checkCollision(collidertop, collider2))
-			{
-				if (Map::map[i][j] <8 && Map::map[i][j] >-1)
-				{
-					position.y = collider2.y + collider2.h;
-					velocity.y = 2;
-					break;
-				}
-			}
-		}
+	handleCollision();
+	
 	dest.x = position.x - Game::camera.x;
 	dest.y = position.y;
-	
+}
+void Player::handleCollision()
+{
+	Collider *c = Collider::CheckCollision(position,dest);
+
+	if (c[0].m <8 && c[0].m >-1)
+	{
+		position.y = c[0].collider.y + c[0].collider.h;
+		velocity.y = 2;
+	}
+	if (c[1].m <8 && c[1].m >-1)
+	{
+		jumping = 0;
+		position.y = c[1].collider.y - dest.h;
+	}
+	else
+		jumping = 1;
+	if (c[2].m <8 && c[2].m >-1)
+	{
+		position.x = c[2].collider.x - dest.w;
+	}
+	if (c[3].m <8 && c[3].m >-1)
+	{
+		position.x = c[3].collider.x + c[3].collider.w;
+	}
 }
 void Player::handleAnimation()
 {

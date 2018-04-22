@@ -1,15 +1,15 @@
 #include "Game.h"
-#include "TextureManager.h"
+#include "Collider.h"
 #include "GameObject.h"
-#include "Player.h"
 #include "Map.h"
+#include "Player.h"
 
 GameObject *Mushroom;
 Map *map;
 Player *Mario;
 SDL_Renderer *Game::renderer = 0;
 SDL_Event Game::e;
-SDL_Rect Game::camera = { 0,0,13564,864 };
+SDL_Rect Game::camera = { 0,0,13504,960 };
 Game::Game()
 {
 }
@@ -93,7 +93,7 @@ void Game::update()
 	if (Mushroom->active)
 	{
 		Mushroom->update();
-		if (checkCollision(Mario->dest, Mushroom->dest))
+		if (Collider::CheckCollision(Mario->dest, Mushroom->dest))
 		{
 			Mario->super = 1;
 			Mario->src.y = 0;
@@ -129,18 +129,7 @@ void Game::clean()
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
-bool Game::checkCollision(SDL_Rect r1, SDL_Rect r2)
-{
-	if (r1.x > r2.x + r2.w)
-		return 0;
-	if (r1.y > r2.y + r2.h)
-		return 0;
-	if (r1.x + r1.w < r2.x)
-		return 0;
-	if (r1.y + r1.h < r2.y)
-		return 0;
-	return 1;
-}
+
 bool Game::isRunning()
 {
 	return running;
