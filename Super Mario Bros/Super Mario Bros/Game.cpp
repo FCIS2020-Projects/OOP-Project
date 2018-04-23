@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemy.h"
 
 GameObject *Mushroom;
 Map *map;
@@ -10,6 +11,9 @@ Player *Mario;
 SDL_Renderer *Game::renderer = 0;
 SDL_Event Game::e;
 SDL_Rect Game::camera = { 0,0,13504,960 };
+Enemy *E1, *E2;
+
+
 Game::Game()
 {
 }
@@ -25,6 +29,9 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 	map = new Map();
 	Mario = new Player("assets/NES - Super Mario Bros - Mario.png",128,732,16,16,4);
 	Mushroom = new GameObject("assets/Mushroom.png",1000,732,16,16,4);
+	E1 = new Enemy("assets/Enemy.png", 2850, 732, 16, 16, 4);
+	E2 = new Enemy("assets/Enemy.png", 2700, 732, 16, 16, 4);
+
 	powerup = Mix_LoadWAV("SFX/smb_powerup.wav");
 	spause = Mix_LoadWAV("SFX/smb_pause.wav");
 	music = Mix_LoadMUS("Music/01-main-theme-overworld.mp3");
@@ -90,6 +97,9 @@ void Game::update()
 	if (camera.x > camera.w-screen_width)
 		camera.x = camera.w-screen_width;
 	Mario->update();
+	E1->update(Mario);
+	E2->update(Mario);
+
 	if (Mushroom->active)
 	{
 		Mushroom->update();
@@ -110,6 +120,8 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	map->DrawMap();
 	Mario->render(flip);
+	E1->render(SDL_FLIP_NONE);
+	E2->render(SDL_FLIP_NONE);
 	if(Mushroom->active)
 		Mushroom->render(SDL_FLIP_NONE);
 	SDL_RenderPresent(renderer);
