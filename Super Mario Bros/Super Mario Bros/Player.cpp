@@ -9,10 +9,33 @@ Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :
 	jumping = 0;
 	smallJump_s = Mix_LoadWAV("SFX/smb_jump-small.wav");
 	superJump_s = Mix_LoadWAV("SFX/smb_jump-super.wav");
+	dieng= Mix_LoadWAV("Music/08-you-re-dead.mp3");
 	lastPosition = position;
 }
 void Player::update()
 {
+	if (active == 0) {
+		if (super == 1) {
+			super = 0;
+			active = 1;
+		}
+		else
+		{
+			if (dead_co == 63) {
+			Mix_PlayChannel(-1, dieng, 0);
+			}
+			if (dead_co > 0) { dest.y-=2; dead_co--; }
+			else dest.y+=4;
+			src.x = 5 * 16;
+			if (dest.y > 1000)
+				SDL_Quit();
+			return;
+		}
+	}
+	if (position.y >= 1000)
+		active = 0;
+
+
 	position.x += velocity.x * speed;
 	position.y += velocity.y * speed;
 	handleAnimation();
@@ -85,6 +108,12 @@ void Player::jump()
 		else
 			Mix_PlayChannel(-1, smallJump_s, 0);
 	}
+}
+
+void Player::dying()
+{
+	super = 0;
+	src.x = 16 * 5;
 }
 Player::~Player()
 {

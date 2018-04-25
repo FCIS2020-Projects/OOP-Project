@@ -1,6 +1,5 @@
 #include "Collider.h"
 #include "Map.h"
-
 Collider::Collider()
 {
 }
@@ -34,11 +33,13 @@ Collider* Collider::CheckCollision(Vector2D position, SDL_Rect dest)
 			{
 				c[0].m = Map::map[i][j];
 				c[0].collider = collider2;
+				if(Map::map[i][j] == 1 || Map::map[i][j] == 2)Map::arr_Vib[i][j].first = 1;
 			}
 			if (CheckCollision(bottom, collider2))
 			{
 				c[1].m = Map::map[i][j];
 				c[1].collider = collider2;
+				
 			}
 			if (CheckCollision(right, collider2))
 			{

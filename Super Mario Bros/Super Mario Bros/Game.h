@@ -12,7 +12,7 @@ class Game
 	bool running = 1,pause=0;
 	SDL_Window* window;
 	SDL_RendererFlip flip;
-	Mix_Chunk *powerup,*spause;
+	Mix_Chunk *powerup, *spause;
 	Mix_Music *music;
 public:
 	static SDL_Rect camera;

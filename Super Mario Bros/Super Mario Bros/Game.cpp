@@ -3,7 +3,8 @@
 #include "GameObject.h"
 #include "Map.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "Goomba.h"
+#include "Plant.h"
 
 GameObject *Mushroom;
 Map *map;
@@ -11,7 +12,8 @@ Player *Mario;
 SDL_Renderer *Game::renderer = 0;
 SDL_Event Game::e;
 SDL_Rect Game::camera = { 0,0,13504,960 };
-Enemy *E1, *E2;
+Goomba *G1, *G2 ,*G3 ,*G4;
+Plant  *P1 ,*P2;
 
 
 Game::Game()
@@ -29,12 +31,20 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 	map = new Map();
 	Mario = new Player("assets/NES - Super Mario Bros - Mario.png",128,732,16,16,4);
 	Mushroom = new GameObject("assets/Mushroom.png",1000,732,16,16,4);
-	E1 = new Enemy("assets/Enemy.png", 2850, 732, 16, 16, 4);
-	E2 = new Enemy("assets/Enemy.png", 2700, 732, 16, 16, 4);
+
+	G1 = new Goomba("assets/Goomba.png", 2850, 732, 16, 16, 4);
+	G2 = new Goomba("assets/Goomba.png", 2700, 732, 16, 16, 4);
+	G3 = new Goomba("assets/Goomba.png", 3150, 732, 16, 16, 4);
+	G4 = new Goomba("assets/Goomba.png", 3300, 732, 16, 16, 4);
+	P1 = new Plant("assets/Plant.png", 2975, 550, 16, 22, 4);
+	P2 = new Plant("assets/Plant.png", 3680, 550, 16, 22, 4);
+
 
 	powerup = Mix_LoadWAV("SFX/smb_powerup.wav");
 	spause = Mix_LoadWAV("SFX/smb_pause.wav");
+	
 	music = Mix_LoadMUS("Music/01-main-theme-overworld.mp3");
+	
 	Mix_PlayMusic(music, -1);
 }
 void Game::handleEvents()
@@ -91,14 +101,24 @@ void Game::handleEvents()
 }
 void Game::update()
 {
+	
 	camera.x = Mario->position.x - screen_width / 2;
 	if (camera.x < 0)
 		camera.x = 0;
 	if (camera.x > camera.w-screen_width)
 		camera.x = camera.w-screen_width;
+	
 	Mario->update();
-	E1->update(Mario);
-	E2->update(Mario);
+	if (Mario->active == 0) {
+		return;
+	}
+	G1->update(Mario);
+	G2->update(Mario);
+	G3->update(Mario);
+	G4->update(Mario);
+	P1->update(Mario);
+	P2->update(Mario);
+
 
 	if (Mushroom->active)
 	{
@@ -117,14 +137,35 @@ void Game::update()
 }
 void Game::render()
 {
-	SDL_RenderClear(renderer);
+	SDL_RenderClear(renderer);//start
+	P1->render(SDL_FLIP_NONE);
+	P2->render(SDL_FLIP_NONE);
+
+
 	map->DrawMap();
 	Mario->render(flip);
-	E1->render(SDL_FLIP_NONE);
-	E2->render(SDL_FLIP_NONE);
+	
+	if (G1->active) {
+		G1->render(SDL_FLIP_NONE);
+	}
+
+	if (G2->active)
+	{
+		G2->render(SDL_FLIP_NONE);
+	}
+
+	if (G3->active) {
+		G3->render(SDL_FLIP_NONE);
+	}
+
+	if (G4->active)
+	{
+		G4->render(SDL_FLIP_NONE);
+	}
+	
 	if(Mushroom->active)
 		Mushroom->render(SDL_FLIP_NONE);
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(renderer);//end
 }
 void Game::capFPS(int start)
 {

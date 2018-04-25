@@ -1,21 +1,10 @@
-﻿  Enemy.cpp
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(43): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(59): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(59): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(60): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(60): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(61): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(61): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(62): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(62): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\enemy.cpp(65): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Game.cpp
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\game.cpp(94): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\game.cpp(112): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+﻿  Player.cpp
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(43): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(71): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
      Creating library C:\Users\Ahmed Hassan\Desktop\OOP-Project\Super Mario Bros\Debug\Super Mario Bros.lib and object C:\Users\Ahmed Hassan\Desktop\OOP-Project\Super Mario Bros\Debug\Super Mario Bros.exp
   Super Mario Bros.vcxproj -> C:\Users\Ahmed Hassan\Desktop\OOP-Project\Super Mario Bros\Debug\Super Mario Bros.exe
