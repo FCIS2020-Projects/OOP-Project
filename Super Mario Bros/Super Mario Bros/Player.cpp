@@ -10,6 +10,8 @@ Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :
 	smallJump_s = Mix_LoadWAV("SFX/smb_jump-small.wav");
 	superJump_s = Mix_LoadWAV("SFX/smb_jump-super.wav");
 	bump = Mix_LoadWAV("SFX/smb_bump.wav");
+	flagpole = Mix_LoadWAV("SFX/smb_flagpole.wav");
+	levelComplete = Mix_LoadWAV("Music/06-level-complete.mp3");
 	dieng= Mix_LoadWAV("Music/08-you-re-dead.mp3");
 	lastPosition = position;
 }
@@ -44,7 +46,32 @@ void Player::update()
 	}
 	if (position.y >= 1000)
 		active = 0;
-
+	if (Complete)
+	{
+		src.x = 8 * 16;
+		if (dest.y > 700)
+		{
+			if (super)
+				dest.y = 704;
+			else
+				dest.y = 768;
+			dest.x += 2;
+			walking = 1;
+			jumping = 0;
+			handleAnimation();
+			if (dest.x > 1024&& !Mix_Playing(-1))
+				SDL_Quit();
+			if (!Mix_Playing(-1))
+				Mix_PlayChannel(-1, levelComplete, 0);
+		}
+		else
+		{
+			dest.y += 4;
+			if(!Mix_Playing(-1))
+				Mix_PlayChannel(-1, flagpole, 0);
+		}
+		return;
+	}
 
 	position.x += velocity.x * speed;
 	position.y += velocity.y * speed;
@@ -86,6 +113,8 @@ void Player::handleCollision()
 	{
 		position.x = c[2].collider.x - dest.w;
 	}
+	if (c[2].m >= 8 && c[2].m < 12)
+		finish();
 	if (c[3].m <8 && c[3].m >-1)
 	{
 		position.x = c[3].collider.x + c[3].collider.w;
@@ -93,24 +122,12 @@ void Player::handleCollision()
 }
 void Player::handleAnimation()
 {
-	if (super)
-	{
-		if (jumping)
-			src.x = 4 * 16;
-		else if (walking)
-			src.x = 16 * ((SDL_GetTicks() / 100) % 3);
-		else
-			src.x = 6 * 16;
-	}
+	if (jumping)
+		src.x = 4 * 16;
+	else if (walking)
+		src.x = 16 * ((SDL_GetTicks() / 100) % 3);
 	else
-	{
-		if (jumping)
-			src.x = 4 * 16;
-		else if (walking)
-			src.x = 16 * ((SDL_GetTicks() / 100) % 3);
-		else
-			src.x = 6 * 16;
-	}
+		src.x = 6 * 16;
 }
 void Player::jump()
 {
@@ -125,7 +142,12 @@ void Player::jump()
 			Mix_PlayChannel(-1, smallJump_s, 0);
 	}
 }
-
+void Player::finish()
+{
+	Mix_PauseMusic();
+	Complete = 1;
+	
+}
 Player::~Player()
 {
 }
