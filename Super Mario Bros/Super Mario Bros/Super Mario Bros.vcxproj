@@ -146,6 +146,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TextureManager.h" />

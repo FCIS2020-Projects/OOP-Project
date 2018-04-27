@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Collider.h"
-
+#include <iostream>
 Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :GameObject(texturefile, x, y, w, h, scale)
 {
 	src.y = 32;
@@ -9,6 +9,7 @@ Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :
 	jumping = 0;
 	smallJump_s = Mix_LoadWAV("SFX/smb_jump-small.wav");
 	superJump_s = Mix_LoadWAV("SFX/smb_jump-super.wav");
+	bump = Mix_LoadWAV("SFX/smb_bump.wav");
 	dieng= Mix_LoadWAV("Music/08-you-re-dead.mp3");
 	lastPosition = position;
 }
@@ -17,13 +18,22 @@ void Player::update()
 	if (active == 0) {
 		if (super == 1) {
 			super = 0;
+			position.y = 0;
+
+			src.y = 32;
+			src.h = 16;
+
+			dest.h = 16 * 4;
 			active = 1;
 		}
 		else
 		{
+			dying ++;
 			if (dead_co == 63) {
-			Mix_PlayChannel(-1, dieng, 0);
+				Mix_PlayChannel(-1, dieng, 0);
+				
 			}
+
 			if (dead_co > 0) { dest.y-=2; dead_co--; }
 			else dest.y+=4;
 			src.x = 5 * 16;
@@ -52,12 +62,18 @@ void Player::update()
 }
 void Player::handleCollision()
 {
-	Collider *c = Collider::CheckCollision(position,dest);
+	Collider *c = Collider::CheckCollision(position,dest,super);
+
 
 	if (c[0].m <8 && c[0].m >-1)
 	{
 		position.y = c[0].collider.y + c[0].collider.h;
+		if (c[0].m == 1 || c[0].m == 2) {
+			Mix_PlayChannel(-1, bump , 0);
+			
+		}
 		velocity.y = 2;
+		
 	}
 	if (c[1].m <8 && c[1].m >-1)
 	{
@@ -110,11 +126,6 @@ void Player::jump()
 	}
 }
 
-void Player::dying()
-{
-	super = 0;
-	src.x = 16 * 5;
-}
 Player::~Player()
 {
 }

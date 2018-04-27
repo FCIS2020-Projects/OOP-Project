@@ -43,15 +43,15 @@ void Plant::handleMarioCollision(Player* Pmario) {
 	SDL_Rect right = { position.x + dest.w,position.y + dest.h / 2,1,1 };
 	SDL_Rect left = { position.x,position.y + dest.h / 2,1,1 };
 
-	SDL_Rect collider2;
+	SDL_Rect collider2 ;
 
 	if (Pmario->super == 0) {
 	
-		 collider2 = { static_cast<int>(Pmario->position.x) ,static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.h),static_cast<int>(Pmario->dest.w) };
+		 collider2 = { static_cast<int>(Pmario->position.x) ,static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
 	}
 	else
 	{
-		 collider2 = { static_cast<int>(Pmario->position.x ),static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.h)/2,static_cast<int>(Pmario->dest.w)*2 };
+		 collider2 = { static_cast<int>(Pmario->position.x ),static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
 	}
 	if (Pmario->active == 1) {
 

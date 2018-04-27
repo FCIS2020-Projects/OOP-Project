@@ -5,15 +5,19 @@
 #include "Player.h"
 #include "Goomba.h"
 #include "Plant.h"
+#include "Mushroom.h"
+#include <iostream>
 
-GameObject *Mushroom;
+//GameObject *Mushroom;
 Map *map;
 Player *Mario;
 SDL_Renderer *Game::renderer = 0;
 SDL_Event Game::e;
 SDL_Rect Game::camera = { 0,0,13504,960 };
-Goomba *G1, *G2 ,*G3 ,*G4;
+Goomba *G1, *G2 ,*G3 ,*G4 ,*G5 ,*G6 ,*G7;
 Plant  *P1 ,*P2;
+Mushroom *M1/*, *M2, *M3*/;
+//m = new Mushroom("assets/Mushroom.png", 1000, 732, 16, 22, 4);
 
 
 Game::Game()
@@ -30,23 +34,27 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
 	map = new Map();
 	Mario = new Player("assets/NES - Super Mario Bros - Mario.png",128,732,16,16,4);
-	Mushroom = new GameObject("assets/Mushroom.png",1000,732,16,16,4);
+	//Mushroom = new GameObject("assets/Mushroom.png",1000,732,16,16,4);
 
 	G1 = new Goomba("assets/Goomba.png", 2850, 732, 16, 16, 4);
 	G2 = new Goomba("assets/Goomba.png", 2700, 732, 16, 16, 4);
 	G3 = new Goomba("assets/Goomba.png", 3150, 732, 16, 16, 4);
 	G4 = new Goomba("assets/Goomba.png", 3300, 732, 16, 16, 4);
+	G5 = new Goomba("assets/Goomba.png", 11100, 732, 16, 16, 4);
+	G6 = new Goomba("assets/Goomba.png", 11150, 732, 16, 16, 4);
+	G7 = new Goomba("assets/Goomba.png", 11300, 732, 16, 16, 4);
 	P1 = new Plant("assets/Plant.png", 2975, 550, 16, 22, 4);
 	P2 = new Plant("assets/Plant.png", 3680, 550, 16, 22, 4);
-
-
-	powerup = Mix_LoadWAV("SFX/smb_powerup.wav");
+	M1 = new Mushroom("assets/Mushroom.png", -100, -100, 16, 16, 4);
+	
+	
 	spause = Mix_LoadWAV("SFX/smb_pause.wav");
 	
 	music = Mix_LoadMUS("Music/01-main-theme-overworld.mp3");
 	
 	Mix_PlayMusic(music, -1);
 }
+
 void Game::handleEvents()
 {
 	while (SDL_PollEvent(&e))
@@ -107,7 +115,11 @@ void Game::update()
 		camera.x = 0;
 	if (camera.x > camera.w-screen_width)
 		camera.x = camera.w-screen_width;
-	
+	if (!Mario->dying) {
+		if(music!=nullptr)
+			Mix_FreeMusic(music);
+	}
+
 	Mario->update();
 	if (Mario->active == 0) {
 		return;
@@ -116,11 +128,20 @@ void Game::update()
 	G2->update(Mario);
 	G3->update(Mario);
 	G4->update(Mario);
+	G5->update(Mario);
+	G6->update(Mario);
+	G7->update(Mario);
 	P1->update(Mario);
 	P2->update(Mario);
+		
+	if(M1->active == 1)
+		M1->update(Mario);
+	/*if(M2->active)
+		M2->update(Mario);
+	if(M3->active)
+		M3->update(Mario);*/
 
-
-	if (Mushroom->active)
+	/*if (Mushroom->active)
 	{
 		Mushroom->update();
 		if (Collider::CheckCollision(Mario->dest, Mushroom->dest))
@@ -133,7 +154,7 @@ void Game::update()
 			Mix_PlayChannel(-1, powerup, 0);
 			Mushroom->active = 0;
 		}
-	}
+	}*/
 }
 void Game::render()
 {
@@ -162,9 +183,25 @@ void Game::render()
 	{
 		G4->render(SDL_FLIP_NONE);
 	}
-	
-	if(Mushroom->active)
-		Mushroom->render(SDL_FLIP_NONE);
+	if (G5->active) {
+		G5->render(SDL_FLIP_NONE);
+	}
+
+	if (G6->active)
+	{
+		G6->render(SDL_FLIP_NONE);
+	}
+
+	if (G7->active) {
+		G7->render(SDL_FLIP_NONE);
+	}
+
+	if (M1->active)
+		M1->render(SDL_FLIP_NONE);
+	/*if (M2->active)
+		M2->render(SDL_FLIP_NONE);
+	if (M3->active)
+		M3->render(SDL_FLIP_NONE);*/
 	SDL_RenderPresent(renderer);//end
 }
 void Game::capFPS(int start)
@@ -191,6 +228,25 @@ bool Game::Paused()
 {
 	return pause;
 }
+
 Game::~Game()
 {
+}
+
+void Game::Help(int x, int y)
+{
+	
+	if (M1->active == 0) {
+		M1 = new Mushroom("assets/Mushroom.png", x, y - 64, 16, 16, 4);
+		M1->active = 1;
+
+	}
+	/*if (M2->active == 0) {
+		M2->active = 1;
+		M2 = new Mushroom("assets/Mushroom.png", x, y, 16, 16, 4);
+	}
+	if (M3->active == 0) {
+		M3->active = 1;
+		M3 = new Mushroom("assets/Mushroom.png", x, y, 16, 16, 4);
+	}*/
 }

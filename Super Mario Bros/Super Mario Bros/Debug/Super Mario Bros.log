@@ -1,10 +1,4 @@
-﻿  Player.cpp
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(43): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(71): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\player.cpp(75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  Game.cpp
+c:\users\ahmed hassan\desktop\oop-project\super mario bros\super mario bros\game.cpp(113): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
      Creating library C:\Users\Ahmed Hassan\Desktop\OOP-Project\Super Mario Bros\Debug\Super Mario Bros.lib and object C:\Users\Ahmed Hassan\Desktop\OOP-Project\Super Mario Bros\Debug\Super Mario Bros.exp
   Super Mario Bros.vcxproj -> C:\Users\Ahmed Hassan\Desktop\OOP-Project\Super Mario Bros\Debug\Super Mario Bros.exe

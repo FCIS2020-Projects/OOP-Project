@@ -62,11 +62,11 @@ void Goomba::handleMarioCollision(Player* Pmario) {
 	SDL_Rect collider2 ;
 	if (Pmario->super == 0) {
 
-		collider2 = { static_cast<int>(Pmario->position.x) ,static_cast<int>(Pmario->position.y) , static_cast<int>(Pmario->dest.h),static_cast<int>(Pmario->dest.w) };
+		collider2 = { static_cast<int>(Pmario->position.x) ,static_cast<int>(Pmario->position.y) , static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
 	}
 	else
 	{
-		collider2 = { static_cast<int>(Pmario->position.x),static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.h)/2,static_cast<int>(Pmario->dest.w)*2 };
+		collider2 = { static_cast<int>(Pmario->position.x),static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
 	}
 	
 	if (active == 1 && co == 120)

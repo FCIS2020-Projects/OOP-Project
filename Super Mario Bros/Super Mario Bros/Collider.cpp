@@ -17,7 +17,7 @@ bool Collider::CheckCollision(SDL_Rect r1, SDL_Rect r2)
 	return 1;
 }
 
-Collider* Collider::CheckCollision(Vector2D position, SDL_Rect dest)
+Collider* Collider::CheckCollision(Vector2D position, SDL_Rect dest,bool super)
 {
 	SDL_Rect top = { position.x + dest.w / 2,position.y,1,1 };
 	SDL_Rect bottom = { position.x + dest.w / 2,position.y + dest.h,1,1 };
@@ -33,13 +33,20 @@ Collider* Collider::CheckCollision(Vector2D position, SDL_Rect dest)
 			{
 				c[0].m = Map::map[i][j];
 				c[0].collider = collider2;
-				if(Map::map[i][j] == 1 || Map::map[i][j] == 2)Map::arr_Vib[i][j].first = 1;
+				if (Map::map[i][j] == 1 || Map::map[i][j] == 2)
+				{
+
+					if (Map::arr_Vib[i][j].type != 0 && Map::arr_Vib[i][j].co > 0) {
+						Map::arr_Vib[i][j].second = 4;
+					}
+					else if(super && Map::map[i][j]==2 )Map::arr_Vib[i][j].second = 2;
+					else Map::arr_Vib[i][j].first = 1;
+				}
 			}
 			if (CheckCollision(bottom, collider2))
 			{
 				c[1].m = Map::map[i][j];
 				c[1].collider = collider2;
-				
 			}
 			if (CheckCollision(right, collider2))
 			{
@@ -54,6 +61,7 @@ Collider* Collider::CheckCollision(Vector2D position, SDL_Rect dest)
 		}
 	return c;
 }
+
 Collider::~Collider()
 {
 }
