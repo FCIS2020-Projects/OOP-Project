@@ -1,6 +1,9 @@
 #pragma once
-#include "Goomba.h"
-class Mushroom : public Goomba {
+#include "GameObject.h"
+#include "Player.h"
+#include "Collider.h"
+
+class Mushroom : public GameObject {
 
 public:
 	Mix_Chunk * powerup;

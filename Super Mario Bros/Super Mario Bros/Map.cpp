@@ -9,13 +9,12 @@ Map::Map()
 {
 	tileset = TextureManager::LoadTexture("assets/terrain_ss.png");
 	bp = TextureManager::LoadTexture("assets/blockpart.png");
-	coin = TextureManager::LoadTexture("assets/COIN.png");
-	flower = TextureManager::LoadTexture("assets/blockpart.png");
-	mushroom = TextureManager::LoadTexture("assets/blockpart.png");
+	coin = TextureManager::LoadTexture("assets/coin_block.png");
 	LoadMap("assets/Map.map");
 	src.x = src.y = 0;
 	position.x = position.y = 0;
 	dest.x = dest.y = 0;
+	Coin_Music = Mix_LoadWAV("SFX/smb_coin.wav");
 	
 }
 
@@ -63,26 +62,29 @@ void Map::DrawMap()
 
 			if (arr_Vib[i][j].second == 4 || (arr_Vib[i][j].rise>0 && arr_Vib[i][j].rise<=64)) {
 			     	//std::cout << "type" << std::endl;
-
 			switch (arr_Vib[i][j].type)
 				{
 				case 1:
-					
 					src.x = 0;
 					src.y = 0;
+					Mix_PlayChannel(-1, Coin_Music, 0);
 					//std::cout << "case" << std::endl;
 					arr_Vib[i][j].rise += 4;
 					dest.y -= arr_Vib[i][j].rise;
+					src.x = ((SDL_GetTicks()/ 100) % 4)*16;
 					TextureManager::Draw(coin, src, dest);
 					dest.y += arr_Vib[i][j].rise;
-					if (arr_Vib[i][j].rise == 64)arr_Vib[i][j].rise = 0;
-					
+					if (arr_Vib[i][j].rise == 80)arr_Vib[i][j].rise = 0;
 					break;
-				case 2:
-					Game::Help(position.x, position.y);
-					break;
-				case 3:
 
+				case 2:
+					Game::Getcoordinate(position.x, position.y,1);
+					arr_Vib[i][j].type = 0;
+					break;
+
+				case 3:
+					Game::Getcoordinate(position.x, position.y, 2);
+					arr_Vib[i][j].type = 0;
 					break;
 				default:
 					break;

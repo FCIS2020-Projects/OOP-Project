@@ -3,7 +3,7 @@
 
 struct _pair
 {
-	int first=0;
+	int first=0;//moving state
 	int second=0;// 0 no move 1 move 2 break
 	int type; // the type of the block 0->empty 1->coin 2->mushroom 3->flower
 	int co = 0;
@@ -15,8 +15,9 @@ class Map
 {
 
 	SDL_Rect src, dest;
-	SDL_Texture *tileset ,*bp ,*coin ,*flower ,*mushroom;
+	SDL_Texture *tileset ,*bp ,*coin ;
 	Vector2D position;
+	Mix_Chunk *Coin_Music;
 public:
 	static int map[15][211];
 	static _pair arr_Vib[15][211];

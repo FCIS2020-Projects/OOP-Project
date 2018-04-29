@@ -6,6 +6,7 @@
 #include "Goomba.h"
 #include "Plant.h"
 #include "Mushroom.h"
+#include "Flower.h"
 #include <iostream>
 
 //GameObject *Mushroom;
@@ -16,8 +17,8 @@ SDL_Event Game::e;
 SDL_Rect Game::camera = { 0,0,13504,960 };
 Goomba *G1, *G2 ,*G3 ,*G4 ,*G5 ,*G6 ,*G7;
 Plant  *P1 ,*P2;
-Mushroom *M1/*, *M2, *M3*/;
-//m = new Mushroom("assets/Mushroom.png", 1000, 732, 16, 22, 4);
+Mushroom *M1;
+Flower *F1;
 
 
 Game::Game()
@@ -40,12 +41,13 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 	G2 = new Goomba("assets/Goomba.png", 2700, 732, 16, 16, 4);
 	G3 = new Goomba("assets/Goomba.png", 3150, 732, 16, 16, 4);
 	G4 = new Goomba("assets/Goomba.png", 3300, 732, 16, 16, 4);
-	G5 = new Goomba("assets/Goomba.png", 11100, 732, 16, 16, 4);
+	G5 = new Goomba("assets/Goomba.png", 11050, 732, 16, 16, 4);
 	G6 = new Goomba("assets/Goomba.png", 11150, 732, 16, 16, 4);
 	G7 = new Goomba("assets/Goomba.png", 11300, 732, 16, 16, 4);
 	P1 = new Plant("assets/Plant.png", 2975, 550, 16, 22, 4);
 	P2 = new Plant("assets/Plant.png", 3680, 550, 16, 22, 4);
 	M1 = new Mushroom("assets/Mushroom.png", -100, -100, 16, 16, 4);
+	F1 = new Flower("assets/COIN.png", -100, -100, 16, 16, 4);
 	
 	
 	spause = Mix_LoadWAV("SFX/smb_pause.wav");
@@ -53,6 +55,8 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 	music = Mix_LoadMUS("Music/01-main-theme-overworld.mp3");
 	
 	Mix_PlayMusic(music, -1);
+
+	
 }
 
 void Game::handleEvents()
@@ -69,16 +73,20 @@ void Game::handleEvents()
 			{
 			case SDLK_RIGHT:
 				Mario->velocity.x = 1;
+				
 				Mario->walking = 1;
-				flip = SDL_FLIP_NONE;
+				Mario->flip = SDL_FLIP_NONE;
 				break;
 			case SDLK_LEFT:
 				Mario->velocity.x = -1;
 				Mario->walking = 1;
-				flip = SDL_FLIP_HORIZONTAL;
+				Mario->flip = SDL_FLIP_HORIZONTAL;
 				break;
 			case SDLK_z:
 				Mario->jump();
+				break;
+			case SDLK_x:
+				Mario->Fire();
 				break;
 			case SDLK_ESCAPE:
 				pause = !pause;
@@ -133,6 +141,7 @@ void Game::update()
 	G7->update(Mario);
 	P1->update(Mario);
 	P2->update(Mario);
+	F1->update(Mario);
 		
 	if(M1->active == 1)
 		M1->update(Mario);
@@ -162,9 +171,8 @@ void Game::render()
 	P1->render(SDL_FLIP_NONE);
 	P2->render(SDL_FLIP_NONE);
 
-
 	map->DrawMap();
-	Mario->render(flip);
+	Mario->render(Mario->flip);
 	
 	if (G1->active) {
 		G1->render(SDL_FLIP_NONE);
@@ -202,6 +210,14 @@ void Game::render()
 		M2->render(SDL_FLIP_NONE);
 	if (M3->active)
 		M3->render(SDL_FLIP_NONE);*/
+
+	if (F1->active)
+		F1->render(SDL_FLIP_NONE);
+
+	if (Mario->f1->active)
+		Mario->f1->render(SDL_FLIP_NONE);
+	if (Mario->f2->active)
+		Mario->f2->render(SDL_FLIP_NONE);
 	SDL_RenderPresent(renderer);//end
 }
 void Game::capFPS(int start)
@@ -233,20 +249,19 @@ Game::~Game()
 {
 }
 
-void Game::Help(int x, int y)
+void Game::Getcoordinate(int x, int y ,int type)
 {
-	
-	if (M1->active == 0) {
-		M1 = new Mushroom("assets/Mushroom.png", x, y - 64, 16, 16, 4);
-		M1->active = 1;
+	if (type == 1) {
 
+		if (M1->active == 0) {
+			M1->position.x = x;
+			M1->position.y= y - 64;
+			M1->active = 1;
+		}
 	}
-	/*if (M2->active == 0) {
-		M2->active = 1;
-		M2 = new Mushroom("assets/Mushroom.png", x, y, 16, 16, 4);
+	if (type == 2)
+	{
+		F1 = new Flower("assets/COIN.png", x, y - 64, 16, 16, 4);
+		F1->active = 1;
 	}
-	if (M3->active == 0) {
-		M3->active = 1;
-		M3 = new Mushroom("assets/Mushroom.png", x, y, 16, 16, 4);
-	}*/
 }

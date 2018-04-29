@@ -1,18 +1,17 @@
 #include "Mushroom.h"
 
 
-Mushroom::Mushroom(const char *texturefile, int x, int y, int w, int h, int scale) :Goomba(texturefile, x, y, w, h, scale)
+Mushroom::Mushroom(const char *texturefile, int x, int y, int w, int h, int scale) :GameObject(texturefile, x, y, w, h, scale)
 {
 	active = 0;
 	velocity.x = 1;
-	speed = 1;
+	speed = 4;
 	powerup = Mix_LoadWAV("SFX/smb_powerup.wav");
 }
 
 void Mushroom::update(Player* Pmario)
 {
-		position.x += velocity.x * speed;
-
+	position.x += velocity.x * speed;
 
 	position.y += velocity.y * speed;
 	handleCollision();
@@ -30,14 +29,8 @@ void Mushroom::handleMarioCollision(Player* Pmario) {
 	SDL_Rect left = { position.x,position.y + dest.h / 2,1,1 };
 
 	SDL_Rect collider2;
-	if (Pmario->super == 0) {
 
-		collider2 = { static_cast<int>(Pmario->position.x) ,static_cast<int>(Pmario->position.y) , static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
-	}
-	else
-	{
-		collider2 = { static_cast<int>(Pmario->position.x),static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
-	}
+	collider2 = { static_cast<int>(Pmario->position.x),static_cast<int>(Pmario->position.y),static_cast<int>(Pmario->dest.w),static_cast<int>(Pmario->dest.h) };
 
 	if (active == 1)
 	{
@@ -50,7 +43,7 @@ void Mushroom::handleMarioCollision(Player* Pmario) {
 			Pmario->dest.h = 32 * 4;
 			Pmario->position.y = Pmario->dest.y - 16 * 4;
 			Mix_PlayChannel(-1, powerup, 0);
-			active = 0;
+			this->active = 0;
 		}
 
 	}

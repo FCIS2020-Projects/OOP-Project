@@ -33,9 +33,25 @@ void GameObject::update()
 }
 void GameObject::handleCollision()
 {
-	Collider *col = Collider::CheckCollision(position, dest);
-	if (col[1].m<8 && col[1].m>-1)
-		position.y = col[1].collider.y - dest.h;
+	Collider *c = Collider::CheckCollision(position, dest);
+	if (c[0].m <8 && c[0].m >-1)
+	{
+		position.y = c[0].collider.y + c[0].collider.h;
+		velocity.y = 2;
+	}
+	if (c[1].m <8 && c[1].m >-1)
+	{
+		position.y = c[1].collider.y - dest.h;
+	}
+
+	if (c[2].m <8 && c[2].m >-1)
+	{
+		velocity.x *= -1;
+	}
+	if (c[3].m <8 && c[3].m >-1)
+	{
+		velocity.x *= -1;
+	}
 }
 void GameObject::render(SDL_RendererFlip flip)
 {

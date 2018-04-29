@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+
 #include <iostream>
 #include "Vector2D.h"
 
@@ -11,7 +12,6 @@ class Game
 	int screen_height;
 	bool running = 1,pause=0;
 	SDL_Window* window;
-	SDL_RendererFlip flip;
 	
 	Mix_Music *music;
 public:
@@ -28,7 +28,7 @@ public:
 	void clean();
 	bool isRunning();
 	bool Paused();
-	static void Help(int x, int y);
+	static void Getcoordinate(int x, int y ,int type);
 	~Game();
 
 };

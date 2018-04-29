@@ -142,6 +142,8 @@
   <ItemGroup>
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="Flower.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -156,6 +158,8 @@
   <ItemGroup>
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="FireBall.h" />
+    <ClInclude Include="Flower.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
