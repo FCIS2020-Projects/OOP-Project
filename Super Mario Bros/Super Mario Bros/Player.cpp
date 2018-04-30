@@ -90,13 +90,6 @@ void Player::update()
 			}
 			handleAnimation();
 
-			dest.x += 2;
-			walking = 1;
-			jumping = 0;
-			handleAnimation();
-			if (dest.x > 1024&& !Mix_Playing(-1))
-				SDL_Quit();
-
 			if (!Mix_Playing(-1))
 				Mix_PlayChannel(-1, levelComplete, 0);
 		}
@@ -165,27 +158,12 @@ void Player::handleCollision()
 }
 void Player::handleAnimation()
 {
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-		if (jumping)
-			src.x = 4 * 16;
-		else if (walking)
-			src.x = 16 * ((SDL_GetTicks() / 100) % 3);
-		else
-			src.x = 6 * 16;
-//=======
-//=======
-//>>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 	if (jumping)
 		src.x = 4 * 16;
 	else if (walking)
 		src.x = 16 * ((SDL_GetTicks() / 100) % 3);
 	else
 		src.x = 6 * 16;
-//<<<<<<< HEAD
-//>>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
-//=======
-//>>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 }
 void Player::jump()
 {
@@ -204,8 +182,6 @@ void Player::finish()
 {
 	Mix_PauseMusic();
 	Complete = 1;
-//<<<<<<< HEAD
-//<<<<<<< HEAD
 
 }
 void Player::Fire()

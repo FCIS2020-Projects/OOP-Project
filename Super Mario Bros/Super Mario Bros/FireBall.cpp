@@ -5,8 +5,7 @@
 FireBall::FireBall(const char *texturefile, int x, int y, int w, int h, int scale):GameObject(texturefile, x, y, w, h, scale)
 {
 	speed = 7;
-	velocity.x = 1;
-	velocity.y = -1;
+	velocity.y = 2;
 	active = 0;
 }
 
