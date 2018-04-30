@@ -77,8 +77,11 @@ void Goomba::handleMarioCollision(Player* Pmario) {
 		}
 		if (Collider::CheckCollision(top, collider2))
 		{
-			if (co == 0)
+			Player::cnt_score += 75;
+			if (co == 0) {
 				active = 0;
+				
+			}
 			else
 				co--;
 

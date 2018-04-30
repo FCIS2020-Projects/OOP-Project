@@ -43,6 +43,7 @@ void Mushroom::handleMarioCollision(Player* Pmario) {
 			Pmario->dest.h = 32 * 4;
 			Pmario->position.y = Pmario->dest.y - 16 * 4;
 			Mix_PlayChannel(-1, powerup, 0);
+			Player::cnt_score += 100;
 			this->active = 0;
 		}
 

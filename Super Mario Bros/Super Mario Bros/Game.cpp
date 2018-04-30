@@ -7,9 +7,11 @@
 #include "Plant.h"
 #include "Mushroom.h"
 #include "Flower.h"
+#include "TextureManager.h"
 #include <iostream>
+using namespace std;
+#include<string>
 
-//GameObject *Mushroom;
 Map *map;
 Player *Mario;
 SDL_Renderer *Game::renderer = 0;
@@ -24,6 +26,7 @@ Flower *F1;
 Game::Game()
 {
 }
+
 void Game::init(const char title[], int x, int y, int w, int h, int flag)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -33,12 +36,14 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	SDL_SetRenderDrawColor(renderer, 107, 140, 255, 255);
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+	
+	
 	map = new Map();
 	Mario = new Player("assets/NES - Super Mario Bros - Mario.png",128,732,16,16,4);
-	//Mushroom = new GameObject("assets/Mushroom.png",1000,732,16,16,4);
+	
 
 	G1 = new Goomba("assets/Goomba.png", 2850, 732, 16, 16, 4);
-	G2 = new Goomba("assets/Goomba.png", 2700, 732, 16, 16, 4);
+	G2 = new Goomba("assets/Goomba.png", 2600, 732, 16, 16, 4);
 	G3 = new Goomba("assets/Goomba.png", 3150, 732, 16, 16, 4);
 	G4 = new Goomba("assets/Goomba.png", 3300, 732, 16, 16, 4);
 	G5 = new Goomba("assets/Goomba.png", 11050, 732, 16, 16, 4);
@@ -58,6 +63,60 @@ void Game::init(const char title[], int x, int y, int w, int h, int flag)
 
 	
 }
+
+int Game::showmenu(SDL_Surface * screen, TTF_Font * font)
+{/*
+	Uint32 time;
+	int x, y;
+	const int nummenu = 2;
+	 const char* labels[nummenu] = { "continue","Exit" };
+	SDL_Surface* MENUS[nummenu];
+	bool selected[nummenu] = { 0,0 };
+	SDL_Color color[2] = { {255,255,255},{255,0,0} };
+
+	MENUS[0] = TTF_RenderGlyph_Solid(font, (Uint16)labels[0], color[0]);
+	MENUS[1] = TTF_RenderGlyph_Solid(font, (Uint16)labels[1], color[0]);
+	SDL_Rect pos[nummenu];
+	pos[0].x = screen->clip_rect.w / 2 - MENUS[0]->clip_rect.w / 2;
+	pos[0].x = screen->clip_rect.h / 2 - MENUS[0]->clip_rect.h;
+	pos[1].x = screen->clip_rect.w / 2 - MENUS[0]->clip_rect.w / 2;
+	pos[1].x = screen->clip_rect.h / 2 - MENUS[0]->clip_rect.h;
+	SDL_Event event;
+	while (1)
+	{
+		time = SDL_GetTicks();
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				for (int i = 0; i < nummenu; i++)
+					SDL_FreeSurface(MENUS[i]);
+				return 1;
+
+			case SDL_MOUSEMOTION :
+				x = event.motion.x;
+				y = event.motion.y;
+				for (int i = 0; i < nummenu; i++)
+				{
+					if (x >= pos[i].x&&x<=pos[i].x+pos[i].w&&y>=pos[i].y&&y<=pos[i].y+pos[i].h)
+						if (!selected[i])
+						{
+							selected[i] = 1;
+							SDL_FreeSurface(MENUS[i]);
+							
+						}
+				}
+			default:
+				break;
+			}
+
+		}
+	}*/
+	return 0;
+}
+	
+
 
 void Game::handleEvents()
 {
@@ -88,6 +147,7 @@ void Game::handleEvents()
 			case SDLK_x:
 				Mario->Fire();
 				break;
+			
 			case SDLK_ESCAPE:
 				pause = !pause;
 				if (pause)
@@ -117,7 +177,7 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	
+
 	camera.x = Mario->position.x - screen_width / 2;
 	if (camera.x < 0)
 		camera.x = 0;
@@ -145,35 +205,44 @@ void Game::update()
 		
 	if(M1->active == 1)
 		M1->update(Mario);
-	/*if(M2->active)
-		M2->update(Mario);
-	if(M3->active)
-		M3->update(Mario);*/
-
-	/*if (Mushroom->active)
-	{
-		Mushroom->update();
-		if (Collider::CheckCollision(Mario->dest, Mushroom->dest))
-		{
-			Mario->super = 1;
-			Mario->src.y = 0;
-			Mario->src.h = 32;
-			Mario->dest.h = 32*4;
-			Mario->position.y = Mario->dest.y - 16*4;
-			Mix_PlayChannel(-1, powerup, 0);
-			Mushroom->active = 0;
-		}
-	}*/
+	
 }
 void Game::render()
 {
 	SDL_RenderClear(renderer);//start
+
+
 	P1->render(SDL_FLIP_NONE);
 	P2->render(SDL_FLIP_NONE);
 
 	map->DrawMap();
+
 	Mario->render(Mario->flip);
-	
+	if (Mario->numOfLives >= 0) {
+		SDL_Rect src,dest;
+		SDL_Texture *coin;
+		coin = TextureManager::LoadTexture("assets/COIN.png");
+		src.x = 0;
+		src.y = 0;
+		src.h = 16;
+		src.w = 16;
+		dest.x = 64 ;
+		dest.y = 150;
+		dest.h = 64;
+		dest.w = 64;
+		TextureManager::Draw(coin, src, dest);
+		if (Mario->numOfLives >= 1) {
+			dest.x += 32;
+			TextureManager::Draw(coin, src, dest);
+		}
+		 if (Mario->numOfLives >= 2)
+		{
+			dest.x += 32;
+			TextureManager::Draw(coin, src, dest);
+		}
+
+	}
+
 	if (G1->active) {
 		G1->render(SDL_FLIP_NONE);
 	}
@@ -206,10 +275,7 @@ void Game::render()
 
 	if (M1->active)
 		M1->render(SDL_FLIP_NONE);
-	/*if (M2->active)
-		M2->render(SDL_FLIP_NONE);
-	if (M3->active)
-		M3->render(SDL_FLIP_NONE);*/
+	
 
 	if (F1->active)
 		F1->render(SDL_FLIP_NONE);

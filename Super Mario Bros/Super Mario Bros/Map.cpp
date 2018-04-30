@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "TextureManager.h"
 #include <fstream>
+#include "Player.h"
 #include <iostream>
 
 int Map::map[15][211];
@@ -61,20 +62,23 @@ void Map::DrawMap()
 			}
 
 			if (arr_Vib[i][j].second == 4 || (arr_Vib[i][j].rise>0 && arr_Vib[i][j].rise<=64)) {
-			     	//std::cout << "type" << std::endl;
+
 			switch (arr_Vib[i][j].type)
 				{
 				case 1:
 					src.x = 0;
 					src.y = 0;
 					Mix_PlayChannel(-1, Coin_Music, 0);
-					//std::cout << "case" << std::endl;
+				
 					arr_Vib[i][j].rise += 4;
 					dest.y -= arr_Vib[i][j].rise;
 					src.x = ((SDL_GetTicks()/ 100) % 4)*16;
 					TextureManager::Draw(coin, src, dest);
 					dest.y += arr_Vib[i][j].rise;
-					if (arr_Vib[i][j].rise == 80)arr_Vib[i][j].rise = 0;
+					if (arr_Vib[i][j].rise == 80) {
+						arr_Vib[i][j].rise = 0;
+						Player::cnt_coin += 1;
+					}
 					break;
 
 				case 2:

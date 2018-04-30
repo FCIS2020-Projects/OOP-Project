@@ -8,8 +8,7 @@ struct _pair
 	int type; // the type of the block 0->empty 1->coin 2->mushroom 3->flower
 	int co = 0;
 	int fall_b = 0;
-	int rise = 0;
-	
+	int rise = 0;	
 };
 class Map
 {

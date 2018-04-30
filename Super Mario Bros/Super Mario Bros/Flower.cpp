@@ -43,6 +43,7 @@ void Flower::handleMarioCollision(Player* Pmario) {
 			Pmario->src.h = 32;
 			Pmario->dest.h = 32 * 4;
 			Pmario->position.y = Pmario->dest.y - 16 * 4;
+			Player::cnt_score += 150;
 			active = 0;
 		}
 

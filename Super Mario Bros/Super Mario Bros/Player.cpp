@@ -1,6 +1,10 @@
 #include "Player.h"
 #include "Collider.h"
 #include <iostream>
+
+int Player::cnt_coin = 0;
+int Player::cnt_score = 0;
+
 Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :GameObject(texturefile, x, y, w, h, scale)
 {
 	src.y = 32;
@@ -19,7 +23,11 @@ Player::Player(const char *texturefile, int x, int y, int w, int h, int scale) :
 	lastPosition = position;
 	f1 = new FireBall("Assets/FIRE_BALLS.png",-100,-100,16,16,4);//2
 	f2 = new FireBall("Assets/FIRE_BALLS.png", -100, -100, 16, 16, 4);//2
+
+	
+
 }
+
 void Player::update()
 {
 	if (active == 0) {
@@ -27,37 +35,42 @@ void Player::update()
 			super = 0;
 			fire = 0;
 			position.y = 0;
-
 			src.y = 32;
 			src.h = 16;
 
 			dest.h = 16 * 4;
 			active = 1;
 		}
-		else
+		else if(super == 0 && fire == 0)
 		{
+			if (numOfLives > 0) {
+				position.y = 0;
+				
+				numOfLives--;
+				active = 1;
+			}
+			else {
 			dying ++;
 			if (dead_co == 63) {
 				Mix_PlayChannel(-1, dieng, 0);
 				
 			}
 
-			if (dead_co > 0) { dest.y-=2; dead_co--; }
+			if (dead_co > 0) {
+				dest.y-=2; dead_co--; 
+			}
 			else dest.y+=4;
 			src.x = 5 * 16;
 			if (dest.y > 1000)
 				SDL_Quit();
 			return;
 		}
+		}
 	}
 	if (position.y >= 1000)
 		active = 0;
 	if (Complete)
 	{
-<<<<<<< HEAD
-		
-=======
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 		src.x = 8 * 16;
 		if (dest.y > 700)
 		{
@@ -65,7 +78,7 @@ void Player::update()
 				dest.y = 704;
 			else
 				dest.y = 768;
-<<<<<<< HEAD
+
 			position.x += 5;
 			walking = 1;
 			jumping = 0;
@@ -76,33 +89,28 @@ void Player::update()
 				SDL_Quit();
 			}
 			handleAnimation();
-=======
+
 			dest.x += 2;
 			walking = 1;
 			jumping = 0;
 			handleAnimation();
 			if (dest.x > 1024&& !Mix_Playing(-1))
 				SDL_Quit();
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
+
 			if (!Mix_Playing(-1))
 				Mix_PlayChannel(-1, levelComplete, 0);
 		}
 		else
 		{
 			dest.y += 4;
-<<<<<<< HEAD
-			if (!Mix_Playing(-1))
-=======
+
 			if(!Mix_Playing(-1))
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
+
 				Mix_PlayChannel(-1, flagpole, 0);
 		}
 		return;
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 
 	position.x += velocity.x * speed;
 	position.y += velocity.y * speed;
@@ -157,21 +165,27 @@ void Player::handleCollision()
 }
 void Player::handleAnimation()
 {
-<<<<<<< HEAD
+//<<<<<<< HEAD
+//<<<<<<< HEAD
 		if (jumping)
 			src.x = 4 * 16;
 		else if (walking)
 			src.x = 16 * ((SDL_GetTicks() / 100) % 3);
 		else
 			src.x = 6 * 16;
-=======
+//=======
+//=======
+//>>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 	if (jumping)
 		src.x = 4 * 16;
 	else if (walking)
 		src.x = 16 * ((SDL_GetTicks() / 100) % 3);
 	else
 		src.x = 6 * 16;
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
+//<<<<<<< HEAD
+//>>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
+//=======
+//>>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 }
 void Player::jump()
 {
@@ -190,7 +204,8 @@ void Player::finish()
 {
 	Mix_PauseMusic();
 	Complete = 1;
-<<<<<<< HEAD
+//<<<<<<< HEAD
+//<<<<<<< HEAD
 
 }
 void Player::Fire()
@@ -225,10 +240,10 @@ void Player::Fire()
 		f2->position.y = position.y + dest.h / 2;//4
 		f2->active = 1;
 	}
-=======
-	
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
+
 }
+
+
 Player::~Player()
 {
 }

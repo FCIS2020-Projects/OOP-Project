@@ -10,12 +10,12 @@ class Player : public GameObject
 	Vector2D lastPosition;
 	const int jumpHeight = 300;
 	int dead_co = 64;
-<<<<<<< HEAD
 
-=======
-	bool Complete=0;
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 public:
+	int numOfLives = 2;
+	static int cnt_coin;
+	static int cnt_score;
+	
 	SDL_RendererFlip flip;
 	FireBall *f1,*f2;
 	bool super = 0, walking, fire = 0, Complete = 0;
@@ -25,11 +25,10 @@ public:
 	void handleCollision();
 	void handleAnimation();
 	void jump();
+	
 	void finish();
-<<<<<<< HEAD
+
 	void Fire();
-=======
->>>>>>> c9828ce0e51f6f6d2c435bac0c8bd90c734f30b1
 	~Player();
 };
 
