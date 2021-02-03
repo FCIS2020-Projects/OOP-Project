@@ -24,7 +24,7 @@ Collider* Collider::CheckCollision(Vector2D position, SDL_Rect dest,bool super)
 	SDL_Rect right = { position.x + dest.w,position.y + dest.h / 2,1,1 };
 	SDL_Rect left = { position.x,position.y + dest.h / 2,1,1 };
 
-	Collider c[4];
+	Collider* c = new Collider[4];
 	for (int i = 0; i < 15; i++)
 		for (int j = 0; j < 211; j++)
 		{
